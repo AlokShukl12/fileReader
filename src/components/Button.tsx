@@ -15,7 +15,7 @@ const variantToClass: Record<ButtonVariant, string> = {
   ghost: 'btn btn--ghost',
 };
 
-const Button = forwardRef<unknown, ButtonProps>(
+const Button = forwardRef<HTMLElement, ButtonProps>(
   ({ children, variant = 'primary', className = '', as: Component = 'button', ...props }, ref) => {
     const MotionComponent = motion(Component as ElementType);
     const classes = [variantToClass[variant] || variantToClass.primary, className]
@@ -24,14 +24,14 @@ const Button = forwardRef<unknown, ButtonProps>(
 
     return (
       <MotionComponent
-        ref={ref as never}
+        ref={ref}
         className={classes}
         whileHover={{ y: -2, boxShadow: '0 18px 30px rgba(79, 70, 229, 0.28)' }}
         whileTap={{ scale: 0.97 }}
         transition={{ type: 'spring', stiffness: 260, damping: 20 }}
         {...props}
       >
-        {children}
+        {children as ReactNode}
       </MotionComponent>
     );
   }
